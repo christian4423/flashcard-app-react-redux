@@ -1,0 +1,17 @@
+﻿{
+  "rename": {
+    "title": "Rename Deck",
+    "label": "Title",
+    "placeholder": "Rename me..."
+  },
+  "renameCard": {
+    "title": "Rename Card",
+    "label": "Title",
+    "placeholder": "I needz title"
+  },
+  "new_deck": {
+    "title": "New Deck",
+    "label": "Title",
+    "placeholder": "HTML ch-01"
+  }
+}
