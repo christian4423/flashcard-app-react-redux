@@ -7,7 +7,7 @@ var guid = Guid.create();
 
 export function fetchDecks() {
     return function (dispatch) {
-        axios.get('http://localhost:4000/getDecks')
+        axios.get('http://localhost:4000/deck/getDecks')
             .then((responce) => {
                 dispatch({
                     type: "FETCH_DECK_FULFILLED",
@@ -25,9 +25,8 @@ export function fetchDecks() {
 
 export function addDeck(title) {
   let id = new Guid.create().value;
-  console.log(id)
     return function (dispatch) {
-        axios.post('http://localhost:4000/add',{
+        axios.post('deck/add',{
           type: 'POST_DECK',
           title: title,
           _id:id
@@ -45,6 +44,32 @@ export function addDeck(title) {
         .catch((err) => {
             dispatch({
                 type: "POST_DECK_REJECTED",
+                payload: err
+            })
+        })
+    }
+};
+
+export function deleteDeck(id) {
+    return function (dispatch) {
+        axios.post(`/deck/delete?id=${id}`,{
+          type: "DELETE_DECK",
+          payload: {
+            id: id
+          }
+        })
+        .then((responce) => {
+            dispatch({
+                type: "DELETE_DECK_FULFILLED",
+                payload: {
+                  responce: responce,
+                  id: id
+                }
+            })
+        })
+        .catch((err) => {
+            dispatch({
+                type: "DELETE_DECK_REJECTED",
                 payload: err
             })
         })

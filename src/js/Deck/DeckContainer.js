@@ -2,7 +2,7 @@
 import Deck from './deck';
 import AddDeck from './AddDeck';
 import { connect } from "react-redux";
-import {fetchDecks, addDeck} from '../actions/DeckActions';
+import {fetchDecks, addDeck, deleteDeck} from '../actions/DeckActions';
 
 var currentMenu = ""
 
@@ -29,16 +29,46 @@ export default class DeckContainer extends React.Component {
     openMenu(id){
       if (currentMenu){
         document.getElementById(currentMenu).style.display = "none";
-      }
-      currentMenu = id+"--menu"
+      };
+      currentMenu = id+"--menu";
       document.getElementById(id+"--menu").style.display = "block";
+    };
+
+    closeMenu(id){
+      if (currentMenu){
+        currentMenu = "";
+      }
+      document.getElementById(id+"--menu").style.display = "none";
+    }
+
+    deleteDeck(id){
+      currentMenu = ""
+      console.log(`delete deck: ${id} event triggered`);
+      this.props.dispatch(deleteDeck(id));
+    }
+
+    renameDeck(id){
+      console.log(`rename deck: ${id} event triggered`);
+      //todo: rename deck actions
+    }
+
+    openEditor(id){
+      console.log(`open editor for deck: ${id} event triggered`);
+      //todo: open deck editor actions
     }
 
     render() {
 
         const deckList = this.props.decks.decks.map((deck) => {
             return (
-                <Deck openMenu={this.openMenu.bind(this)} key={deck._id} deck={deck}  />
+                <Deck openMenu={this.openMenu.bind(this)}
+                      closeMenu={this.closeMenu.bind(this)}
+                      deleteDeck={this.deleteDeck.bind(this)}
+                      renameDeck={this.renameDeck.bind(this)}
+                      openEditor={this.openEditor.bind(this)}
+                      key={deck._id}
+                      deck={deck}
+                />
             );
         });
 
