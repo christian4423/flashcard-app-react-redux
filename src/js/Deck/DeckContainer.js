@@ -2,7 +2,7 @@
 import Deck from './deck';
 import AddDeck from './AddDeck';
 import { connect } from "react-redux";
-import {fetchDecks, addDeck, deleteDeck} from '../actions/DeckActions';
+import {fetchDecks, addDeck, deleteDeck, renameDeck} from '../actions/DeckActions';
 
 var currentMenu = ""
 
@@ -20,7 +20,7 @@ export default class DeckContainer extends React.Component {
     }
 
     addDeck(e){
-      var title = prompt("Title?");
+      let title = prompt("Title?");
       if (title != null && title.length > 0){
         this.props.dispatch(addDeck(title));
       }
@@ -50,6 +50,11 @@ export default class DeckContainer extends React.Component {
     renameDeck(id){
       console.log(`rename deck: ${id} event triggered`);
       //todo: rename deck actions
+      let title = prompt("Title?");
+      if (title != null && title.length > 0){
+        this.props.dispatch(renameDeck(title, id));
+      }
+
     }
 
     openEditor(id){

@@ -75,3 +75,31 @@ export function deleteDeck(id) {
         })
     }
 };
+
+export function renameDeck(title, id) {
+    return function (dispatch) {
+        axios.post(`deck/update?title=${title}&_id=${id}`,{
+          type: 'UPDATE_DECK',
+          payload:{
+            title: title,
+            _id:id
+          }
+        })
+        .then((responce) => {
+            dispatch({
+                type: "UPDATE_DECK_FULFILLED",
+                payload: {
+                  responce:responce.data,
+                  title: title,
+                  _id: id
+                }
+            })
+        })
+        .catch((err) => {
+            dispatch({
+                type: "UPDATE_DECK_REJECTED",
+                payload: err
+            })
+        })
+    }
+};

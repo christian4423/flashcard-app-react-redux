@@ -66,8 +66,6 @@ router.get('/getDeck/:id', function (req, res) {
 
 router.post('/delete', function (req, res) {
     var id = req.query.id;
-    console.log(req)
-    console.log(`Deck to be deleted: ${id}`)
     Flashcard.findOneAndRemove({ _id: id }, function (err, foundObj) {
         if (err) {
             console.log(err)
@@ -79,9 +77,10 @@ router.post('/delete', function (req, res) {
 
 });
 
-router.post('/update/:id', function (req, res) {
-    var id = req.params.id;
-    console.log(id)
+router.post('/update', function (req, res) {
+    var id = req.query._id;
+    var title = req.query.title;
+    console.log(req)
     Flashcard.findOne({ _id: id }, function (err, foundObj) {
         if (err) {
             console.log(err)
@@ -90,8 +89,8 @@ router.post('/update/:id', function (req, res) {
             if (!foundObj) {
                 res.status(404).send();
             } else {
-                if (req.body.title) {
-                    foundObj.title = req.body.title;
+                if (title) {
+                    foundObj.title = title;
                 }
 
                 foundObj.save(function (err, updateObj) {
